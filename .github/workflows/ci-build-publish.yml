@@ -41,7 +41,7 @@ jobs:
       run: dotnet pack --configuration Release --no-build --output _packages /p:version=${{ steps.currenttag.outputs.tag }}
 
     - name: List Packages
-      run: ls -la ./src/DotNetNinja.Web.Core/bin/Release/*nupkg
+      run: ls -la ./_packages/*nupkg
 
     - name: Publish NuGet and symbols
       id: nuget-push
