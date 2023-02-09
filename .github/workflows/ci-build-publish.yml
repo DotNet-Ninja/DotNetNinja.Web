@@ -45,7 +45,7 @@ jobs:
 
     - name: Publish NuGet and symbols
       id: nuget-push
-      uses: edumserrano/nuget-push@v1
+      uses: edumserrano/nuget-push@v1.0.0
       with:
         api-key: '${{ secrets.GITHUB_TOKEN }}' # this example is using GitHub secrets to pass the API key
         working-directory: '_packages'
