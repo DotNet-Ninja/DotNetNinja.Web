@@ -25,6 +25,9 @@ jobs:
       with:
         dotnet-version: 7.0.x
 
+    - name: Setup NuGet
+      run: dotnet nuget add source --username DotNet-Ninja --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/DotNet-Ninja/index.json"
+
     - name: Restore dependencies
       run: dotnet restore
 
@@ -35,10 +38,17 @@ jobs:
       run: dotnet test --no-build --configuration Release --verbosity normal
 
     - name: Package Artifacts
-      run: dotnet pack --configuration Release --no-build /p:version=${{ steps.currenttag.outputs.tag }}
+      run: dotnet pack --configuration Release --no-build --output _packages /p:version=${{ steps.currenttag.outputs.tag }}
 
     - name: List Packages
       run: ls -la ./src/DotNetNinja.Web.Core/bin/Release/*nupkg
+
+    - name: Publish NuGet and symbols
+      id: nuget-push
+      uses: edumserrano/nuget-push@v1
+      with:
+        api-key: '${{ secrets.GITHUB_TOKEN }}' # this example is using GitHub secrets to pass the API key
+        working-directory: '_packages'
 
     - name: Create Release
       id: create-release
