@@ -1,0 +1,23 @@
+name: Bump Semantic Version
+on:
+  push:
+    branches:
+      - main
+jobs:
+  bump-tag-version:
+    name: Bump and Tag Version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: jefflinse/pr-semver-bump@v1.3.3
+        name: Bump and Tag Version
+        with:
+          mode: bump
+          repo-token:  ${{ secrets.GITHUB_TOKEN }} 
+          major-label: major
+          minor-label: minor
+          patch-label: patch
+          require-release-notes: true
+          release-notes-prefix: ''
+          release-notes-suffix: ''
+          with-v: false

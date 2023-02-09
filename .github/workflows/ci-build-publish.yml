@@ -1,0 +1,53 @@
+name: Build & Publish
+on:
+  workflow_run:
+    workflows: ["Bump Semantic Version"]
+    types:
+      - completed 
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: 'Get Current tag'
+      id: currenttag
+      uses: "WyriHaximus/github-action-get-previous-tag@v1"
+      with:
+        fallback: 0.1.0 
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --no-restore --configuration Release /p:version=${{ steps.currenttag.outputs.tag }}
+
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+
+    - name: Package Artifacts
+      run: dotnet pack --configuration Release --no-build /p:version=${{ steps.currenttag.outputs.tag }}
+
+    - name: List Packages
+      run: |
+        shopt globstar
+        ls -laR ./**/*.nupkg
+
+    - name: Create Release
+      id: create-release
+      uses: DotNet-Ninja/Create-Release@main
+      with:
+        version: ${{ steps.currenttag.outputs.tag }}
+        tag: ${{ steps.currenttag.outputs.tag }}
+        description: "Release v{0}"
+        owner: ${{ github.repository_owner }}
+        name: DotNetNinja.Web
+        accesstoken: ${{ secrets.GITHUB_TOKEN }}
