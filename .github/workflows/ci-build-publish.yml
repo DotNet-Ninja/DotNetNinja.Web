@@ -1,9 +1,10 @@
 name: Build & Publish
 on:
   workflow_run:
-    workflows: ["Bump Semantic Version"]
+    workflows: 
+    - "Bump Semantic Version"
     types:
-      - completed 
+    - completed 
     
 jobs:
   build:
@@ -28,10 +29,10 @@ jobs:
       run: dotnet restore
 
     - name: Build
-      run: dotnet build --no-restore --configuration Release /p:version=${{ steps.currenttag.outputs.tag }}
+      run: dotnet build --no-restore --configuration Release /p:ContinuousIntegrationBuild=true /p:version=${{ steps.currenttag.outputs.tag }}
 
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --configuration Release --verbosity normal
 
     - name: Package Artifacts
       run: dotnet pack --configuration Release --no-build /p:version=${{ steps.currenttag.outputs.tag }}

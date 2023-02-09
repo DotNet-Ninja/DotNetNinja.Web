@@ -1,10 +1,8 @@
 name: Pull Request Validation Build
-
 on:
-  push:
-    branches: [ "main" ]
   pull_request:
-    branches: [ "main" ]
+    branches: 
+    - "main"
     
 jobs:
   build:
