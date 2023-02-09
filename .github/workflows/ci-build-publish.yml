@@ -16,7 +16,7 @@ jobs:
 
     - name: 'Get Current tag'
       id: currenttag
-      uses: "WyriHaximus/github-action-get-previous-tag@v1"
+      uses: "WyriHaximus/github-action-get-previous-tag@v1.22"
       with:
         fallback: 0.1.0 
 
@@ -45,7 +45,7 @@ jobs:
 
     - name: Publish NuGet and symbols
       id: nuget-push
-      run: dotnet nuget push _packages/*nupkg --source "github"
+      run: dotnet nuget push _packages/*nupkg --source "github" --api-key ${{ secrets.GITHUB_TOKEN }}
 
     - name: Create Release
       id: create-release
