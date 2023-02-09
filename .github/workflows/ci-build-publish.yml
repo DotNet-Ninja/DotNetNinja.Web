@@ -38,9 +38,7 @@ jobs:
       run: dotnet pack --configuration Release --no-build /p:version=${{ steps.currenttag.outputs.tag }}
 
     - name: List Packages
-      run: |
-        shopt globstar
-        ls -laR ./**/*.nupkg
+      run: ls -la ./src/DotNetNinja.Web.Core/bin/Release/*nupkg
 
     - name: Create Release
       id: create-release
