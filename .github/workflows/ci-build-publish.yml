@@ -16,7 +16,7 @@ jobs:
 
     - name: 'Get Current tag'
       id: currenttag
-      uses: "WyriHaximus/github-action-get-previous-tag@v1.22"
+      uses: "WyriHaximus/github-action-get-previous-tag@v1.2.2"
       with:
         fallback: 0.1.0 
 
