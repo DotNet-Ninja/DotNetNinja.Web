@@ -41,14 +41,11 @@ jobs:
       run: dotnet pack --configuration Release --no-build --output _packages /p:version=${{ steps.currenttag.outputs.tag }}
 
     - name: List Packages
-      run: ls -la ./_packages/*nupkg
+      run: ls -la _packages/*nupkg
 
     - name: Publish NuGet and symbols
       id: nuget-push
-      uses: edumserrano/nuget-push@v1.0.0
-      with:
-        api-key: '${{ secrets.GITHUB_TOKEN }}' # this example is using GitHub secrets to pass the API key
-        working-directory: '_packages'
+      run: dotnet nuget push _packages/*nupkg --source "github"
 
     - name: Create Release
       id: create-release
