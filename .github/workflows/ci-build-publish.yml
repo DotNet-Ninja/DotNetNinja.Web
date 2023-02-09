@@ -13,10 +13,12 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+      with:
+        fetchDepth: 2
 
     - name: 'Get Current tag'
       id: currenttag
-      uses: "WyriHaximus/github-action-get-previous-tag@v1.2.2"
+      uses: "WyriHaximus/github-action-get-previous-tag@v1"
       with:
         fallback: 0.1.0 
 
