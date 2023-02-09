@@ -1,13 +1,16 @@
 name: Pull Request - Validate Semantic Version
 on:
   pull_request:
-    types: [labeled, unlabeled, opened, edited, reopened, synchronize, ready_for_review]
+    branches: 
+    - "main"
+
 jobs:
   bump-tag-version:
     name: Validate Semantic Version
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      
       - uses: jefflinse/pr-semver-bump@v1.3.3
         name: Validate
         with:
