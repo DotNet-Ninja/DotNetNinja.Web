@@ -12,6 +12,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "files", "files", "{B68498E4-9168-4D31-9001-10D1E2B0138A}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		coverlet.runsettings = coverlet.runsettings
 		License.txt = License.txt
 		ReadMe.md = ReadMe.md
 	EndProjectSection

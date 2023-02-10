@@ -37,13 +37,13 @@ jobs:
       run: dotnet build --no-restore --configuration Release /p:ContinuousIntegrationBuild=true /p:version=${{ steps.currenttag.outputs.tag }}
 
     - name: Test
-      run: dotnet test --no-build --configuration Release --verbosity normal
+      run: dotnet test --collect:"XPlat Code Coverage" --settings .\coverlet.runsettings --results-directory .\test-results --no-build --configuration Release
+    
+    - name: Merge Test Results
+      run: cat test-results/**/coverage.info test-results/merged.info
 
     - name: Package Artifacts
       run: dotnet pack --configuration Release --no-build --output _packages /p:version=${{ steps.currenttag.outputs.tag }}
-
-    - name: List Packages
-      run: ls -la _packages/*nupkg
 
     - name: Publish NuGet and symbols
       id: nuget-push
