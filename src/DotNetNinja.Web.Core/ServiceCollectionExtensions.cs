@@ -7,7 +7,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddDotNetNinjaWeb(this IServiceCollection services)
     {
-        services.AddSingleton<ITimeProvider, DefaultTimeProvider>();
+        services.AddScoped<ITimeProvider, DefaultTimeProvider>();
         return services;
     }
 }
