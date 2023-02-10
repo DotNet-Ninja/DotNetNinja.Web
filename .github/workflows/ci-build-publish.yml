@@ -40,7 +40,9 @@ jobs:
       run: dotnet test --collect:"XPlat Code Coverage" --settings coverlet.runsettings --results-directory test-results --no-build --configuration Release
     
     - name: Merge Test Results
-      run: cat test-results/**/coverage.info > test-results/merged.info
+      run: |
+        cat test-results/**/coverage.info > test-results/merged.info
+        cat test-results/merged.info
 
     - name: Publish to Coveralls
       uses: coverallsapp/github-action@master
